@@ -1,5 +1,5 @@
 <?php
-require_once('dbconnection.php');
+require_once('dbConnection.php');
 
 function getHouseList(){
 	$pdo = getConnection();

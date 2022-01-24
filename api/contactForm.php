@@ -20,5 +20,5 @@
         echo "Seu email foi enviado com sucesso. Logo nossos corretores entrarão em contato com você!";
     } else {
         http_response_code(500);
-        echo "Oops... algo deu errado. Tente novamente mais tarde.";
+        echo $success;
     }

@@ -270,50 +270,53 @@ jQuery(document).ready(function($) {
 
 });
 
-/**
-  Função para iniciar o app
-*/
 var startApp = function() {
 	gapi.load('auth2', function(){
-	  auth2 = gapi.auth2.init({
-		//nesse exemplo o client id também pode ser informado pela meta tag "google-signin-client_id"
-		//caso ele não seja informado aqui
+		auth2 = gapi.auth2.init({
 		client_id: '266605183348-r1eppaje3nerl87k32rneqrhbgn70qj0.apps.googleusercontent.com',
 		cookiepolicy: 'single_host_origin',
-		scope: 'profile email' // solicitando acesso ao profile e ao e-mail do usuário
-	  });
-	  auth2.attachClickHandler(document.getElementById('customBtn'), {}, onSuccess, onFailure);
+		scope: 'profile email'
+		});
+		auth2.attachClickHandler(document.getElementById('customBtn'), {}, onSuccess, onFailure);
 	});
-  };
-  
-  /**
-	Função executada quando o login é efetuado com sucesso
-  */
-  function onSuccess(googleUser) {
-	  // Recuperando o profile do usuário
-	  var profile = googleUser.getBasicProfile();
-	  console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-	  console.log("Name: " + profile.getName());
-	  console.log("Image URL: " + profile.getImageUrl());
-	  console.log("Email: " + profile.getEmail());
-  
-	  // Recuperando o token do usuario. Essa informação você necessita passar para seu backend
-	  var id_token = googleUser.getAuthResponse().id_token;
-	  console.log("ID Token: " + id_token);
-  }
-  /**
-	Função executada quando ocorrer falha no logn
-  */
-  function onFailure(error) {
-	  console.log(error);
-  }
-  
-  /**
-	Função de deslogar o usuario
-  */
-  function signOut() {
-	  var auth2 = gapi.auth2.getAuthInstance();
-	  auth2.signOut().then(function () {
-		  console.log('User signed out.');
-	  });
-  }
+};
+
+function onSuccess(googleUser) {
+	var profile = googleUser.getBasicProfile();
+	console.log("ID: " + profile.getId());
+	console.log("Name: " + profile.getName());
+	console.log("Image URL: " + profile.getImageUrl());
+	console.log("Email: " + profile.getEmail());
+
+	var id_token = googleUser.getAuthResponse().id_token;
+	console.log("ID Token: " + id_token);
+}
+
+function onFailure(error) {
+	console.log(error);
+}
+
+function signOut() {
+	var auth2 = gapi.auth2.getAuthInstance();
+	auth2.signOut().then(function () {
+		console.log('User signed out.');
+	});
+}
+
+// A string
+var templateString = '<h1>Hello world!</h1>';
+
+// A function that returns a string
+var templateFunction = function () {
+	if (someData.page === 'about') {
+		template = '<h1>About Us</h1>';
+	} else {
+		template = '<h1>Hello world!</h1>';
+	}
+	return template;
+};
+
+var render = function (template, node) {
+	if (!node) return;
+	node.innerHTML = (typeof template === 'function' ? template() : template);
+};

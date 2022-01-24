@@ -130,7 +130,7 @@
         </div>
 
         <div class="owl-carousel nonloop-block-13 mb-5">
-          <?php include('./pages/house_list.php') ?>
+          <?php include('./pages/houseList.php') ?>
         </div>
       </div>
     </div>
@@ -184,7 +184,7 @@
         </div>
         <div class="row">
           <div class="col-md-7 mb-5">
-            <form class="contact__form mb-3" method="post" action="api/contact_form.php">
+            <form class="contact__form mb-3" method="post" action="api/contactForm.php">
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <input name="name" type="text" class="form-control" placeholder="Nome" required=""
@@ -258,7 +258,7 @@
   </div> <!-- .site-wrap -->
 
   <!-- .modal -->
-  <?php include('./pages/house_modal.php') ?>
+  <?php include('./pages/houseModal.php') ?>
 
   <div id="whatswidget-pre-wrapper" class="">
     <div id="whatswidget-widget-wrapper" class="whatswidget-widget-wrapper" style="all:revert;">
@@ -269,20 +269,20 @@
     .whatswidget-cta-mobile{display:none !important}}.whatswidget-button-wrapper{position:fixed !important;bottom:15px !important;right:15px !important}.whatswidget-button{position:relative !important;right:0px !important;background-color:#31d831 !important;border-radius:100% !important;width:60px !important;height:60px !important;box-shadow:2px 1px #0d630d63 !important;transition:1s !important}.whatswidget-icon{width:42px !important;height:42px !important;position:absolute !important; bottom:10px !important; left:10px !important;}.whatswidget-button:hover{filter:brightness(115%) !important;transform:rotate(15deg) scale(1.15) !important;cursor:pointer !important}@keyframes nudge{20%,100%{transform:translate(0,0)}0%{transform:translate(0,5px);transform:rotate(2deg)}10%{transform:translate(0,-5px);transform:rotate(-2deg)}}.whatswidget-link{position:absolute !important;bottom:90px !important;right:5px !important;opacity:0.5 !important}</style>
   </div>
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="packages/jquery-3.3.1.min.js"></script>
+  <script src="packages/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="packages/popper.min.js"></script>
+  <script src="packages/bootstrap.min.js"></script>
+  <script src="packages/owl.carousel.min.js"></script>
+  <script src="packages/jquery.stellar.min.js"></script>
+  <script src="packages/jquery.countdown.min.js"></script>
+  <script src="packages/bootstrap-datepicker.min.js"></script>
   <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.fancybox.min.js"></script>
+  <script src="packages/aos.js"></script>
+  <script src="packages/jquery.fancybox.min.js"></script>
   <script src="js/jquery.sticky.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/contact_form.js"></script>
+  <script src="js/contactForm.js"></script>
   </body>
 </html>

@@ -25,8 +25,6 @@
     <link rel="stylesheet" href="css/style.css">
 
     <meta name="google-signin-client_id" content="266605183348-r1eppaje3nerl87k32rneqrhbgn70qj0.apps.googleusercontent.com">
-
-    <script src='./script.js'></script>
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
   
@@ -87,15 +85,7 @@
       <a href="#properties-section" class="smoothscroll arrow-down"><span class="icon-arrow_downward"></span></a>
     </div>
 
-    <div id="gSignInWrapper" >
-      <div id="customBtn" class="customGPlusSignIn">
-        <span class="icon"></span>
-        <span class="buttonText">Logar com o Google</span>
-      </div>
-    </div>
-    <div id="name"></div>
-
-    <div class="site-section hidden" id="properties-section">
+    <div class="site-section" id="properties-section">
       <div class="container">
         <div class="row mb-5 align-items-center">
           <div class="col-md-7 text-left">
@@ -109,12 +99,12 @@
         </div>
 
         <div class="owl-carousel nonloop-block-13 mb-5">
-          <?php include('pages/house_list.php') ?>
+          <?php include('pages/houseList.php') ?>
         </div>
       </div>
     </div>
 
-    <section class="site-section bg-light bg-image hidden" id="add-house-section">
+    <section class="site-section bg-light bg-image" id="add-house-section">
       <div class="container">
         <div class="row mb-5">
           <div class="col-12 text-center">
@@ -123,40 +113,40 @@
         </div>
         <div class="row">
           <div class="col-md-12 mb-5">
-            <form class="contact__form mb-3" method="post" action="contact_form.php">
+          <form id="form" class="add-house__form mb-3" method="post" action="api/addHouseForm.php" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <input name="name" type="text" class="form-control" placeholder="Nome" required=""
-                          oninvalid="this.setCustomValidity('Insira seu nome.')"
+                        <input name="title" type="text" class="form-control" placeholder="Título" required=""
+                          oninvalid="this.setCustomValidity('Insira o título da casa.')"
                           oninput="setCustomValidity('')"
                         >
                     </div>
                     <div class="col-md-6 form-group">
-                        <input name="email" type="email" class="form-control" placeholder="Email" required=""
+                        <input name="details" type="text" class="form-control" placeholder="Detalhes" required=""
                           oninvalid="this.setCustomValidity('Insira seu email.')"
                           oninput="setCustomValidity('')"
                         >
                     </div>
                     <div class="col-md-6 form-group">
-                        <input name="phone" type="text" class="form-control" placeholder="Telefone">
+                        <input name="image" id="image" type="file" class="form-control" accept="image/*" placeholder="Imagens" multiple>
                     </div>
                     <div class="col-md-6 form-group">
-                        <input name="subject" type="text" class="form-control" placeholder="Assunto">
+                        <input name="price" type="text" class="form-control" placeholder="Preço">
                     </div>
                     <div class="col-12 form-group">
-                        <textarea name="message" class="form-control" rows="3" placeholder="Mensagem" required=""
+                        <textarea name="description" class="form-control" rows="3" placeholder="Descrição" required=""
                           oninvalid="this.setCustomValidity('Insira sua mensagem.')"
                           oninput="setCustomValidity('')"
                         ></textarea>
                     </div>
                     <div class="col-12">
-                        <input name="submit" type="submit" class="btn btn-primary" value="Adicionar">
+                        <input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
                     </div>
                 </div>
             </form>
              <div class="row">
                 <div class="col-12">
-                    <div class="alert alert-success contact__msg" style="display: none" role="alert">
+                    <div class="alert alert-success add-house__msg" style="display: none" role="alert">
                       Seu email foi enviado com sucesso. Logo nossos corretores entrarão em contato com você!
                     </div>
                 </div>
@@ -168,25 +158,23 @@
   </div> <!-- .site-wrap -->
 
   <!-- .modal -->
-  <?php include('pages/edit_modal.php') ?>
+  <?php include('pages/editModal.php') ?>
 
-  <script src="https://apis.google.com/js/api:client.js"></script>
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="packages/jquery-3.3.1.min.js"></script>
+  <script src="packages/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/bootstrap-datepicker.min.js"></script>
+  <script src="packages/popper.min.js"></script>
+  <script src="packages/bootstrap.min.js"></script>
+  <script src="packages/owl.carousel.min.js"></script>
+  <script src="packages/jquery.stellar.min.js"></script>
+  <script src="packages/jquery.countdown.min.js"></script>
+  <script src="packages/bootstrap-datepicker.min.js"></script>
   <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.fancybox.min.js"></script>
+  <script src="packages/aos.js"></script>
+  <script src="packages/jquery.fancybox.min.js"></script>
   <script src="js/jquery.sticky.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/contact_form.js"></script>
-
-  <script>startApp();</script>
+  <script src="js/contactForm.js"></script>
+  <script src="js/addHouseForm.js"></script>
   </body>
 </html>

@@ -55,7 +55,7 @@ foreach ($modalList as $house) {
                 <h3 class='text-black mb-4'>Descrição da Propriedade</h3>
                 <p>{$house->description}</p>
                 <div class='mb-3'><strong class='price'>{$house->price}</strong></div>
-                <p><a href='#contact-section' class='btn btn-primary' data-dismiss='modal'>Editar</a></p>
+                <p class='edit-house-button'><a href='#add-house-section' class='btn btn-primary' data-dismiss='modal'>Efetue o login para poder editar</a></p>
               </div>
             </div>
           </div>
