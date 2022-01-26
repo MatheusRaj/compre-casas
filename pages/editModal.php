@@ -55,7 +55,46 @@ foreach ($modalList as $house) {
                 <h3 class='text-black mb-4'>Descrição da Propriedade</h3>
                 <p>{$house->description}</p>
                 <div class='mb-3'><strong class='price'>{$house->price}</strong></div>
-                <p class='edit-house-button'><a href='#add-house-section' class='btn btn-primary' data-dismiss='modal'>Efetue o login para poder editar</a></p>
+                <div class='row'>
+                  <div class='col-md-12 mb-5'>
+                  <form id='form' class='add-house__form mb-3' method='post' action='api/addHouseForm.php' enctype='multipart/form-data'>
+                        <div class='row'>
+                            <div class='col-md-6 form-group'>
+                                <input name='title' type='text' class='form-control' placeholder='Título' required='
+                                  oninvalid='this.setCustomValidity('Insira o título da casa.')'
+                                  oninput='setCustomValidity('')'
+                                >
+                            </div>
+                            <div class='col-md-6 form-group'>
+                                <input name='price' type='text' class='form-control' placeholder='Preço'>
+                            </div>
+                            <div class='col-md-12 form-group'>
+                                <input name='details' type='text' class='form-control' placeholder='Detalhes' required='
+                                  oninvalid='this.setCustomValidity('Insira seu email.')'
+                                  oninput='setCustomValidity('')'
+                                >
+                            </div>
+                            <div class='col-12 form-group'>
+                                <textarea name='description' class='form-control' rows='3' placeholder='Descrição' required='
+                                  oninvalid='this.setCustomValidity('Insira sua mensagem.')'
+                                  oninput='setCustomValidity('')'
+                                ></textarea>
+                            </div>
+                            <div class='col-12 display__flex'>
+                                <input name='submit' type='submit' class='btn btn-primary' value='Editar'>
+                                <progress class='pure-material-progress-circular' style='display: none'></progress>
+                            </div>
+                        </div>
+                    </form>
+                     <div class='row'>
+                        <div class='col-12'>
+                            <div class='alert alert-success add-house__msg' style='display: none' role='alert'>
+                              Casa salva com sucesso!
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

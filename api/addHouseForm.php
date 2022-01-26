@@ -6,14 +6,15 @@ try {
 
     $ext = $tmpArray[count($tmpArray) - 1];
 
-    $folderName = "../images/";
-
     $imageName = rand(10000, 990000) . '_' . time() . '.' . $ext;
+
+    $folderName = "../../images/";
 
     $filePath = $folderName . $imageName;
 
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $filePath)) {
+    $sucess = move_uploaded_file($_FILES['image']['tmp_name'], $filePath);
 
+    if ($sucess) {
         $con = getConnection();
 
         $details = (object) [
@@ -26,7 +27,7 @@ try {
             ]
         ];
 
-        $html_id = uniqid();
+        $html_id = uniqid('id_');
 
         $data_target = '#' . $html_id;
 

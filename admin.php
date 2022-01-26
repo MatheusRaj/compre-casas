@@ -24,6 +24,8 @@
 
     <link rel="stylesheet" href="css/style.css">
 
+    <script src='https://apis.google.com/js/api.js'></script>
+
     <meta name="google-signin-client_id" content="266605183348-r1eppaje3nerl87k32rneqrhbgn70qj0.apps.googleusercontent.com">
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -70,7 +72,7 @@
 
   
     
-    <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(images/hero_1.jpg);" data-aos="fade" id="home-section">
+    <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(photos/hero_1.jpg);" data-aos="fade" id="home-section">
 
 
       <div class="container">
@@ -88,8 +90,9 @@
     <div class="site-section" id="properties-section">
       <div class="container">
         <div class="row mb-5 align-items-center">
-          <div class="col-md-7 text-left">
+          <div class="col-md-7 text-left display__flex">
             <h2 class="section-title mb-3">Propriedades</h2>
+            <button class='btn btn-link' onclick="refreshPage()">Atualizar lista</button>
           </div>
           <div class="col-md-5 text-left text-md-right">
             <div class="custom-nav1">
@@ -128,7 +131,7 @@
                         >
                     </div>
                     <div class="col-md-6 form-group">
-                        <input name="image" id="image" type="file" class="form-control" accept="image/*" placeholder="Imagens" multiple>
+                        <input name="image" id="image" type="file" class="form-control" accept="image/*" placeholder="Imagens">
                     </div>
                     <div class="col-md-6 form-group">
                         <input name="price" type="text" class="form-control" placeholder="Preço">
@@ -139,15 +142,21 @@
                           oninput="setCustomValidity('')"
                         ></textarea>
                     </div>
-                    <div class="col-12">
-                        <input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
+                    <div class="col-12 display__flex private__component">
+                        <div id="gSignInWrapper">
+                          <span class="label">Para adicionar uma casa faça login:</span>
+                          <div id="customBtn" class="customGPlusSignIn">
+                            <span class="icon"></span>
+                            <span class="buttonText">Google</span>
+                          </div>
+                        </div>
                     </div>
                 </div>
             </form>
              <div class="row">
                 <div class="col-12">
                     <div class="alert alert-success add-house__msg" style="display: none" role="alert">
-                      Seu email foi enviado com sucesso. Logo nossos corretores entrarão em contato com você!
+                      Casa salva com sucesso!
                     </div>
                 </div>
             </div>

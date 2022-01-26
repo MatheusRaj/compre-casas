@@ -1,7 +1,8 @@
 $(document).ready(function (e) {
   $("#form").on("submit", function (e) {
     e.preventDefault();
-    console.log(new FormData(this));
+    $('.pure-material-progress-circular').fadeIn();
+    $(':input[type="submit"]').prop('disabled', true);
 
     $.ajax({
       url: "api/addHouseForm.php",
@@ -11,16 +12,20 @@ $(document).ready(function (e) {
       cache: false,
       processData: false,
       success: function (data) {
-        if (data == "invalid") {
-          $(".add-house__msg").html("Invalid File !").fadeIn();
-          return;
-        }
+        const message = $('.add-house__msg');
+        message.fadeIn().removeClass('alert-danger').addClass('alert-success');
+        setTimeout(function () {
+          message.fadeOut();
+        }, 5000);
 
-        $("#preview").html(data).fadeIn();
         $("#form")[0].reset();
+        $('.pure-material-progress-circular').fadeOut();
+        $(':input[type="submit"]').prop('disabled', false);
       },
       error: function (e) {
+        progress.fadeOut();
         $("#err").html(e).fadeIn();
+        $(':input[type="submit"]').prop('disabled', false);
       },
     });
   });

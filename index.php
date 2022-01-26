@@ -70,7 +70,7 @@
 
   
     
-    <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(images/hero_1.jpg);" data-aos="fade" id="home-section">
+    <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(photos/hero_1.jpg);" data-aos="fade" id="home-section">
 
 
       <div class="container">

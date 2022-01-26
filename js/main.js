@@ -290,6 +290,9 @@ function onSuccess(googleUser) {
 
 	var id_token = googleUser.getAuthResponse().id_token;
 	console.log("ID Token: " + id_token);
+	document.getElementsByClassName('private__component')[0].innerHTML = `
+		<input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
+		<progress class="pure-material-progress-circular" style="display: none"></progress>`;
 }
 
 function onFailure(error) {
@@ -303,20 +306,8 @@ function signOut() {
 	});
 }
 
-// A string
-var templateString = '<h1>Hello world!</h1>';
+const refreshPage = () => {
+	window.location.reload();
+}
 
-// A function that returns a string
-var templateFunction = function () {
-	if (someData.page === 'about') {
-		template = '<h1>About Us</h1>';
-	} else {
-		template = '<h1>Hello world!</h1>';
-	}
-	return template;
-};
-
-var render = function (template, node) {
-	if (!node) return;
-	node.innerHTML = (typeof template === 'function' ? template() : template);
-};
+startApp();
