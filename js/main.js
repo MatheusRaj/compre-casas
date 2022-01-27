@@ -273,7 +273,7 @@ jQuery(document).ready(function($) {
 var startApp = function() {
 	gapi.load('auth2', function(){
 		auth2 = gapi.auth2.init({
-		client_id: '266605183348-r1eppaje3nerl87k32rneqrhbgn70qj0.apps.googleusercontent.com',
+		client_id: '291139686088-5lfuurt88i7b2vjrhfl6vv6mshrt77ot.apps.googleusercontent.com',
 		cookiepolicy: 'single_host_origin',
 		scope: 'profile email'
 		});

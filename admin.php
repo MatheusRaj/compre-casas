@@ -26,7 +26,7 @@
 
     <script src='https://apis.google.com/js/api.js'></script>
 
-    <meta name="google-signin-client_id" content="266605183348-r1eppaje3nerl87k32rneqrhbgn70qj0.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="291139686088-5lfuurt88i7b2vjrhfl6vv6mshrt77ot.apps.googleusercontent.com">
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
   
