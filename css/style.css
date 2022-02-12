@@ -1851,6 +1851,11 @@ h1, h2, h3, h4, h5,
   display: flex
 }
 
+.image__container {
+  flex-direction: column;
+  position: 'relative';
+}
+
 #customBtn {
   display: inline-block;
   background: white;
@@ -1889,4 +1894,29 @@ span.buttonText {
   font-size: 14px;
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
+}
+
+.edit__button {
+  white-space: normal;
+}
+
+.detail__list {
+  flex-wrap: wrap;
+}
+
+.detail__item {
+  white-space: nowrap;
+}
+
+.private__delete__image {
+  position: absolute;
+  top: 10%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  color: rgba(173, 0, 0, 0.7);
+  cursor: pointer;
+}
+
+.delete-icon {
+  font-size: 40px;
 }

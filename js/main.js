@@ -8,6 +8,18 @@ jQuery(document).ready(function($) {
 
 	"use strict";
 
+	const user = window.localStorage.getItem('user');
+
+	if (!!user) {
+		document.getElementsByClassName('private__add__container')[0].innerHTML = `
+			<input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
+			<progress class="pure-material-progress-circular" style="display: none"></progress>`;
+
+		document.getElementsByClassName('private__edit__container')[0].innerHTML = `
+			<input name='submit' type='submit' class='btn btn-primary' value='Editar'>
+			<progress class='pure-material-progress-circular' style='display: none'></progress>`;
+	}
+
 	
 
 	var siteMenuClone = function() {
@@ -270,8 +282,36 @@ jQuery(document).ready(function($) {
 
 });
 
-var startApp = function() {
-	gapi.load('auth2', function(){
+const onSuccess = (googleUser) => {
+	const profile = googleUser.getBasicProfile();
+
+	if (profile.getId() !== '110675883096361831260') {
+
+		const message = $('.unauthorized__msg');
+		message.fadeIn().removeClass('alert-danger').addClass('alert-warning');
+		setTimeout(() => {
+			message.fadeOut();
+			}, 5000);
+		return;
+	}
+
+	window.localStorage.setItem('user', profile.getEmail());
+
+	document.getElementsByClassName('private__add__container')[0].innerHTML = `
+		<input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
+		<progress class="pure-material-progress-circular" style="display: none"></progress>`;
+	
+	document.getElementsByClassName('private__edit__container')[0].innerHTML = `
+		<input name='submit' type='submit' class='btn btn-primary' value='Editar'>
+		<progress class='pure-material-progress-circular' style='display: none'></progress>`;
+}
+
+const onFailure = (error) => {
+	console.log(error);
+}
+
+const startApp = () => {
+	gapi.load('auth2', () => {
 		auth2 = gapi.auth2.init({
 		client_id: '291139686088-5lfuurt88i7b2vjrhfl6vv6mshrt77ot.apps.googleusercontent.com',
 		cookiepolicy: 'single_host_origin',
@@ -280,31 +320,6 @@ var startApp = function() {
 		auth2.attachClickHandler(document.getElementById('customBtn'), {}, onSuccess, onFailure);
 	});
 };
-
-function onSuccess(googleUser) {
-	var profile = googleUser.getBasicProfile();
-	console.log("ID: " + profile.getId());
-	console.log("Name: " + profile.getName());
-	console.log("Image URL: " + profile.getImageUrl());
-	console.log("Email: " + profile.getEmail());
-
-	var id_token = googleUser.getAuthResponse().id_token;
-	console.log("ID Token: " + id_token);
-	document.getElementsByClassName('private__component')[0].innerHTML = `
-		<input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
-		<progress class="pure-material-progress-circular" style="display: none"></progress>`;
-}
-
-function onFailure(error) {
-	console.log(error);
-}
-
-function signOut() {
-	var auth2 = gapi.auth2.getAuthInstance();
-	auth2.signOut().then(function () {
-		console.log('User signed out.');
-	});
-}
 
 const refreshPage = () => {
 	window.location.reload();

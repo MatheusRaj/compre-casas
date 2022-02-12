@@ -18,10 +18,17 @@ function createModalList($item) {
       $data[] = "data:image/png;base64,$image";
     }
 
+    $detailsObject = (object) json_decode($house->details, true);
+
+    $detailsArray = (array) $detailsObject->data;
+
+    $detailsString = implode(', ', $detailsArray);
+
     return (object) [
       "price" => $house->price,
       "title" => $house->title,
       "description" => $house->description,
+      "details" => $detailsString,
       "images" => $data,
       "id" => $house->html_id
     ];
@@ -30,7 +37,12 @@ function createModalList($item) {
 $modalList = array_map('createModalList', $result);
 
 function printImages($image) {
-    echo "<div class='img-fluid modal-img' style='background-image: url({$image});'></div>";
+  echo "<div class='col-12 display__flex image__container'>
+          <div class='img-fluid modal-img' style='background-image: url({$image});width:100%;'></div>
+          <div class='private__delete__image'>
+            <i class='material-icons delete-icon'>delete</i>
+          </div>
+        </div>";
 };
 
 foreach ($modalList as $house) {
@@ -46,60 +58,64 @@ foreach ($modalList as $house) {
                 <div class='modal-body'>
                   <div class='container'>
                     <div class='row'>
-                      <div class='owl-carousel slide-one-item with-dots col-lg-6'>";
-
-    array_map('printImages', $house->images);
-
-    echo "</div>
-              <div class='mb-5 col-lg-6'>
-                <h3 class='text-black mb-4'>Descrição da Propriedade</h3>
-                <p>{$house->description}</p>
-                <div class='mb-3'><strong class='price'>{$house->price}</strong></div>
-                <div class='row'>
-                  <div class='col-md-12 mb-5'>
-                  <form id='form' class='add-house__form mb-3' method='post' action='api/addHouseForm.php' enctype='multipart/form-data'>
-                        <div class='row'>
-                            <div class='col-md-6 form-group'>
-                                <input name='title' type='text' class='form-control' placeholder='Título' required='
-                                  oninvalid='this.setCustomValidity('Insira o título da casa.')'
-                                  oninput='setCustomValidity('')'
-                                >
-                            </div>
-                            <div class='col-md-6 form-group'>
-                                <input name='price' type='text' class='form-control' placeholder='Preço'>
-                            </div>
-                            <div class='col-md-12 form-group'>
-                                <input name='details' type='text' class='form-control' placeholder='Detalhes' required='
-                                  oninvalid='this.setCustomValidity('Insira seu email.')'
-                                  oninput='setCustomValidity('')'
-                                >
-                            </div>
-                            <div class='col-12 form-group'>
-                                <textarea name='description' class='form-control' rows='3' placeholder='Descrição' required='
-                                  oninvalid='this.setCustomValidity('Insira sua mensagem.')'
-                                  oninput='setCustomValidity('')'
-                                ></textarea>
-                            </div>
-                            <div class='col-12 display__flex'>
-                                <input name='submit' type='submit' class='btn btn-primary' value='Editar'>
-                                <progress class='pure-material-progress-circular' style='display: none'></progress>
-                            </div>
+                      <div class='col-lg-6'>
+                        <div class='owl-carousel slide-one-item with-dots'>";
+                           array_map('printImages', $house->images);
+                     echo "
                         </div>
-                    </form>
-                     <div class='row'>
-                        <div class='col-12'>
-                            <div class='alert alert-success add-house__msg' style='display: none' role='alert'>
-                              Casa salva com sucesso!
-                            </div>
+                        <div class='private__add__image'>
+                          <button class='btn btn-primary add__image__button'>Adicionar imagem</button>
                         </div>
+                      </div>
+                          <div class='mb-5 col-lg-6'>
+                            <h3 class='text-black mb-4'>Descrição da Propriedade</h3>
+                            <p>{$house->description}</p>
+                            <div class='mb-3'><strong class='price'>{$house->price}</strong></div>
+                            <div class='row'>
+                              <div class='col-md-12 mb-5'>
+                              <form id='edit_form' class='edit-house__form mb-3' method='post' action='api/editHouseForm.php' enctype='multipart/form-data'>
+                                    <div class='row'>
+                                        <div class='col-md-6 form-group'>
+                                            <input name='title' type='text' value='{$house->title}' class='form-control' placeholder='Título' required='
+                                              oninvalid='this.setCustomValidity('Insira o título da casa.')'
+                                              oninput='setCustomValidity('')'
+                                            >
+                                        </div>
+                                        <div class='col-md-6 form-group'>
+                                            <input name='price' type='text' value='{$house->price}' class='form-control' placeholder='Preço'>
+                                        </div>
+                                        <div class='col-md-12 form-group'>
+                                            <input name='details' type='text' value='{$house->details}' class='form-control' placeholder='Detalhes' required='
+                                              oninvalid='this.setCustomValidity('Insira seu email.')'
+                                              oninput='setCustomValidity('')'
+                                            >
+                                        </div>
+                                        <div class='col-12 form-group'>
+                                            <textarea name='description' class='form-control' rows='3' placeholder='Descrição' required='
+                                              oninvalid='this.setCustomValidity('Insira sua mensagem.')'
+                                              oninput='setCustomValidity('')'
+                                            >{$house->description}</textarea>
+                                            <input name='html_id' type='text' value='{$house->id}' style='display:none'>
+                                        </div>
+                                        <div class='col-12 display__flex private__edit__container'>
+	            	                            <button class='btn btn-primary edit__button' disabled>Para editar faça o login na parte inferior da página</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                 <div class='row'>
+                                    <div class='col-12'>
+                                        <div class='alert alert-success edit-house__msg' style='display: none' role='alert'>
+                                          Casa salva com sucesso!
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>";
+              </div>";
 }

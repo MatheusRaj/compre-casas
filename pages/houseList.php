@@ -25,7 +25,7 @@ function createHouseList($item) {
 $houseList = array_map('createHouseList', $result);
 
 function printDetails($detail) {
-    echo "<span class='w'>{$detail}</span>";
+    echo "<span class='w detail__item'>{$detail}</span>";
 };
 
 foreach ($houseList as $house) {
@@ -35,7 +35,7 @@ foreach ($houseList as $house) {
         </a>
         <div class='prop-details p-3'>
           <div><strong class='price'>{$house->price}</strong></div>
-          <div class='mb-2 d-flex justify-content-between'>";
+          <div class='mb-2 d-flex detail__list justify-content-between'>";
         
     array_map('printDetails', $house->details);
 

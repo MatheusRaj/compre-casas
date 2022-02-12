@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
 
@@ -62,19 +63,16 @@
             </nav>
           </div>
 
-
-          <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-black float-right"><span class="icon-menu h3"></span></a></div>
-
+          <div class="col-6 d-inline-block d-xl-none ml-md-0 py-3">
+            <a href="#" class="site-menu-toggle js-menu-toggle text-black float-right">
+              <span class="icon-menu h3"></span>
+            </a>
+          </div>
         </div>
       </div>
-      
     </header>
-
-  
     
     <div class="site-blocks-cover inner-page-cover overlay" style="background-image: url(photos/hero_1.jpg);" data-aos="fade" id="home-section">
-
-
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-6 mt-lg-5 text-center">
@@ -142,9 +140,14 @@
                           oninput="setCustomValidity('')"
                         ></textarea>
                     </div>
-                    <div class="col-12 display__flex private__component">
+                    <div class="col-12">
+                      <div class="alert alert-warning unauthorized__msg" style="display: none" role="alert">
+                        Você não está autorizado à fazer a autenticação, solicite acesso aos administradores.
+                      </div>
+                    </div>
+                    <div class="col-12 display__flex private__add__container">
                         <div id="gSignInWrapper">
-                          <span class="label">Para adicionar uma casa faça login:</span>
+                          <span class="label">Para adicionar ou editar uma casa faça login: </span>
                           <div id="customBtn" class="customGPlusSignIn">
                             <span class="icon"></span>
                             <span class="buttonText">Google</span>
@@ -185,5 +188,6 @@
   <script src="js/main.js"></script>
   <script src="js/contactForm.js"></script>
   <script src="js/addHouseForm.js"></script>
+  <script src="js/editHouseForm.js"></script>
   </body>
 </html>
