@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    $("#edit_form").on("submit", function (e) {
+    console.log('VAI TOMA NO CU FILHA DA PUTA: ', $(".edit-house__form"));
+    $(".edit-house__form").on("submit", function (e) {
       e.preventDefault();
       const progress = $('.edit-house-progress');
       progress.fadeIn();

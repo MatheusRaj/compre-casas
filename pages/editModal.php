@@ -86,7 +86,7 @@ foreach ($modalList as $house) {
                             <div class='mb-3'><strong class='price'>{$house->price}</strong></div>
                             <div class='row'>
                               <div class='col-md-12 mb-5'>
-                              <form id='edit_form' class='edit-house__form mb-3' method='post' action='api/editHouseForm.php' enctype='multipart/form-data'>
+                              <form class='edit-house__form mb-3' method='post' action='api/editHouseForm.php' enctype='multipart/form-data'>
                                     <div class='row'>
                                         <div class='col-md-6 form-group'>
                                             <input name='title' type='text' value='{$house->title}' class='form-control' placeholder='Título' required='
