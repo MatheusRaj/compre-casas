@@ -12,9 +12,9 @@ try {
 
     $filePath = $folderName . $imageName;
 
-    $sucess = move_uploaded_file($_FILES['image']['tmp_name'], $filePath);
+    $success = move_uploaded_file($_FILES['image']['tmp_name'], $filePath);
 
-    if ($sucess) {
+    if ($success) {
         $con = getConnection();
 
         $details = (object) [

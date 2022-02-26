@@ -8,7 +8,7 @@ try {
 
     $success = unlink($filePath);
 
-    if ($sucess) {    
+    if ($success) {    
         $con = getConnection();
 
 	    $sql = 'SELECT images FROM houses WHERE html_id = :html_id';

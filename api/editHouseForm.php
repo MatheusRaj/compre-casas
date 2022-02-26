@@ -24,7 +24,7 @@ try {
 
     $success = $con->commit();
 
-    if (false) {
+    if ($success) {
         return print_r($data);
     }
 
