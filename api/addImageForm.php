@@ -2,20 +2,19 @@
 require_once('dbConnection.php');
 
 try {
-    if (false) {
-        $tmpArray = explode('.', $_FILES['add-image']['name']);
+    $tmpArray = explode('.', $_FILES['add-image']['name']);
 
-        $ext = $tmpArray[count($tmpArray) - 1];
+    $ext = $tmpArray[count($tmpArray) - 1];
 
-        $imageName = rand(10000, 990000) . '_' . time() . '.' . $ext;
+    $imageName = rand(10000, 990000) . '_' . time() . '.' . $ext;
 
-        $folderName = "../../images/";
+    $folderName = "../../images/";
 
-        $filePath = $folderName . $imageName;
+    $filePath = $folderName . $imageName;
 
-        $sucess = move_uploaded_file($_FILES['add-image']['tmp_name'], $filePath);
+    $sucess = move_uploaded_file($_FILES['add-image']['tmp_name'], $filePath);
 
-    
+    if ($sucess) {    
         $con = getConnection();
 
 	    $sql = 'SELECT images FROM houses WHERE html_id = :html_id';

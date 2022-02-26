@@ -2,14 +2,13 @@
 require_once('dbConnection.php');
 
 try {
-    if (false) {
-        $image = $_REQUEST['image'];
+    $image = $_REQUEST['image'];
 
-        $filePath = '../../images/' . $image;
+    $filePath = '../../images/' . $image;
 
-        $success = unlink($filePath);
+    $success = unlink($filePath);
 
-    
+    if ($sucess) {    
         $con = getConnection();
 
 	    $sql = 'SELECT images FROM houses WHERE html_id = :html_id';
