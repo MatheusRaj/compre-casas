@@ -13,11 +13,47 @@ jQuery(document).ready(function($) {
 	if (!!user) {
 		document.getElementsByClassName('private__add__container')[0].innerHTML = `
 			<input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
-			<progress class="pure-material-progress-circular" style="display: none"></progress>`;
+			<progress class="add-house-progress pure-material-progress-circular" style="display: none"></progress>`;
 
-		document.getElementsByClassName('private__edit__container')[0].innerHTML = `
-			<input name='submit' type='submit' class='btn btn-primary' value='Editar'>
-			<progress class='pure-material-progress-circular' style='display: none'></progress>`;
+		const editContainer = document.querySelectorAll('.private__edit__container');
+
+		editContainer.forEach(item => {
+			item.innerHTML = `
+				<input name='submit' type='submit' class='btn btn-primary' value='Editar'>
+				<progress class='edit-house-progress pure-material-progress-circular' style='display: none'></progress>`;
+		});
+
+		const addImage = document.querySelectorAll('.private__add__image');
+
+		addImage.forEach(item => {
+			const houseId = item.children[0].value;
+			item.innerHTML = `
+				<div class='container'>
+					<div class="row">
+						<form id='add-image-form' method='post' action='api/addImageForm.php' enctype='multipart/form-data'>
+							<label for='add-image'>Selecione a imagem</label>
+							<input id='add-image' name='add-image' type='file' accept='image/*'>
+							<br></br>
+							<input name='html_id' type='text' value='${houseId}' style='visibility:hidden'>
+							<input name='submit' type='submit' class='btn btn-primary' value='Adicionar imagem'>
+							<progress class='add-image-progress pure-material-progress-circular' style='display: none'></progress>
+						</form>
+            		    <div class="col-12">
+							<br></br>
+            		        <div class="alert alert-success add-image__msg" style="display: none" role="alert">
+            		          Imagem salva com sucesso!
+            		        </div>
+							<div class="alert alert-danger error-add-image__msg" style="display: none" role="alert"></div>
+            		    </div>
+            		</div>
+				<div class='container'>`;
+		});
+
+		const icons = document.querySelectorAll('.delete-icon');
+
+		icons.forEach(icon => {
+			icon.style.display = 'block';
+		});
 	}
 
 	
@@ -299,15 +335,85 @@ const onSuccess = (googleUser) => {
 
 	document.getElementsByClassName('private__add__container')[0].innerHTML = `
 		<input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
-		<progress class="pure-material-progress-circular" style="display: none"></progress>`;
-	
-	document.getElementsByClassName('private__edit__container')[0].innerHTML = `
-		<input name='submit' type='submit' class='btn btn-primary' value='Editar'>
-		<progress class='pure-material-progress-circular' style='display: none'></progress>`;
+		<progress class="add-house-progress pure-material-progress-circular" style="display: none"></progress>`;
+
+	const editContainer = document.querySelectorAll('.private__edit__container');
+
+	editContainer.forEach(item => {
+		item.innerHTML = `
+			<input name='submit' type='submit' class='btn btn-primary' value='Editar'>
+			<progress class='edit-house-progress pure-material-progress-circular' style='display: none'></progress>`;
+	});
+
+	const addImage = document.querySelectorAll('.private__add__image');
+
+	addImage.forEach(item => {
+		item.innerHTML = `
+		<input name='submit' type='submit' class='btn btn-primary' value='Adicionar imagem'>
+		<progress class='add-image-progress pure-material-progress-circular' style='display: none'></progress>`;
+	});
+
+	const icons = document.querySelectorAll('.delete-icon');
+
+	icons.forEach(icon => {
+		icon.style.display = 'block';
+	});
 }
 
 const onFailure = (error) => {
 	console.log(error);
+}
+
+const deleteImage = (e, html_id, image) => {
+
+	e.preventDefault();
+
+	$('.delete-icon').fadeOut();
+
+    $('.delete-image-progress').fadeIn();
+
+	const item = { html_id, image };
+
+	const formData = new FormData();
+
+	for ( var key in item ) {
+	    formData.append(key, item[key]);
+	}
+
+	$.ajax({
+		url: "api/deleteImageForm.php",
+		type: "POST",
+		data: formData,
+		contentType: false,
+		cache: false,
+		processData: false,
+		success: function (result) {
+
+			const data = JSON.parse(result);
+			if (!!data.error) {
+			  $('.delete-icon').fadeIn();
+			  $('.delete-image-progress').fadeOut();
+			  $(".error-delete-image__msg").html(`<p>${data.error.msg}</p>`).fadeIn();
+			  setTimeout(function () {
+				$(".error-delete-image__msg").fadeOut();
+			  }, 5000);
+			  $(':input[type="submit"]').prop('disabled', false);
+	
+			  return;
+			}
+
+			const message = $('.delete-image__msg');
+			message.fadeIn().removeClass('alert-danger').addClass('alert-success');
+			setTimeout(function () {
+			message.fadeOut();
+			}, 5000);
+
+			$('.delete-image-progress').fadeOut();
+			$('.delete-icon').fadeIn();
+		}
+	});
+	  
+	return;
 }
 
 const startApp = () => {
@@ -322,7 +428,7 @@ const startApp = () => {
 };
 
 const refreshPage = () => {
-	window.location.reload();
+	window.location.reload(true);
 }
 
 startApp();

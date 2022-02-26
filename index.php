@@ -98,7 +98,7 @@
           <div class="col-md-4 text-center">
             <span class="custom-icon flaticon-house text-primary"></span>
             <h3 class="text-dark">Busque por propriedades.</h3>
-            <p>Com nosso sistema de pesquisa, buscar a prorpiedade ideal é muito simples.</p>
+            <p>Com nosso sistema de pesquisa, buscar a propriedade ideal é muito simples.</p>
           </div>
 
           <div class="col-md-4 text-center">

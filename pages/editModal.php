@@ -15,7 +15,11 @@ function createModalList($item) {
       
       $image = base64_encode(file_get_contents("../images/" . $file));
 
-      $data[] = "data:image/png;base64,$image";
+      $data[] = (object) [
+        "url" => "data:image/png;base64,$image",
+        "name" => $file,
+        "html_id" => $house->html_id
+      ];
     }
 
     $detailsObject = (object) json_decode($house->details, true);
@@ -38,9 +42,10 @@ $modalList = array_map('createModalList', $result);
 
 function printImages($image) {
   echo "<div class='col-12 display__flex image__container'>
-          <div class='img-fluid modal-img' style='background-image: url({$image});width:100%;'></div>
+          <div class='img-fluid modal-img' style='background-image: url({$image->url});width:100%;'></div>
           <div class='private__delete__image'>
-            <i class='material-icons delete-icon'>delete</i>
+            <i class='material-icons delete-icon' onclick='deleteImage(event, \"$image->html_id\", \"$image->name\")'>delete</i>
+            <progress class='delete-image-progress pure-material-progress-circular' style='display:none;'></progress>
           </div>
         </div>";
 };
@@ -59,12 +64,20 @@ foreach ($modalList as $house) {
                   <div class='container'>
                     <div class='row'>
                       <div class='col-lg-6'>
+                        <div class='row'>
+                          <div class='col-12'>
+                              <div class='alert alert-success delete-image__msg' style='display: none' role='alert'>
+                                Imagem removida com sucesso!
+                              </div>
+                              <div class='alert alert-danger error-delete-image__msg' style='display: none' role='alert'></div>
+                          </div>
+                        </div>
                         <div class='owl-carousel slide-one-item with-dots'>";
                            array_map('printImages', $house->images);
                      echo "
                         </div>
                         <div class='private__add__image'>
-                          <button class='btn btn-primary add__image__button'>Adicionar imagem</button>
+                          <input name='html_id' type='text' value='{$house->id}' style='visibility:hidden'>
                         </div>
                       </div>
                           <div class='mb-5 col-lg-6'>
@@ -107,6 +120,7 @@ foreach ($modalList as $house) {
                                         <div class='alert alert-success edit-house__msg' style='display: none' role='alert'>
                                           Casa salva com sucesso!
                                         </div>
+                                        <div class='alert alert-danger error-edit-house__msg' style='display: none' role='alert'></div>
                                     </div>
                                 </div>
                               </div>

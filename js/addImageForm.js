@@ -1,12 +1,12 @@
-$(document).ready(function () {
-    $("#edit_form").on("submit", function (e) {
+$(document).ready(function (e) {
+    $("#add-image-form").on("submit", function (e) {
       e.preventDefault();
-      const progress = $('.edit-house-progress');
+      const progress = $('.add-image-progress');
       progress.fadeIn();
       $(':input[type="submit"]').prop('disabled', true);
   
       $.ajax({
-        url: "api/editHouseForm.php",
+        url: "api/addImageForm.php",
         type: "POST",
         data: new FormData(this),
         contentType: false,
@@ -16,32 +16,25 @@ $(document).ready(function () {
           const data = JSON.parse(result);
           if (!!data.error) {
             progress.fadeOut();
-            $(".error-edit-house__msg").html(`<p>${data.error.msg}</p>`).fadeIn();
+            $(".error-add-image__msg").html(`<p>${data.error.msg}</p>`).fadeIn();
             setTimeout(function () {
-              $(".error-edit-house__msg").fadeOut();
+              $(".error-add-image__msg").fadeOut();
             }, 5000);
             $(':input[type="submit"]').prop('disabled', false);
   
             return;
           }
 
-          const message = $('.edit-house__msg');
+          const message = $('.add-image__msg');
           message.fadeIn().removeClass('alert-danger').addClass('alert-success');
           setTimeout(function () {
             message.fadeOut();
           }, 5000);
-
-          $('.edit-house-progress').fadeOut();
+  
+          $("#add-image-form")[0].reset();
+          $('.add-image-progress').fadeOut();
           $(':input[type="submit"]').prop('disabled', false);
-        },
-        error: function (e) {
-          progress.fadeOut();
-          $(".error-edit-house__msg").html(e).fadeIn();
-          setTimeout(function () {
-            $(".error-edit-house__msg").fadeOut();
-          }, 5000);
-          $(':input[type="submit"]').prop('disabled', false);
-        },
+        }
       });
     });
   });

@@ -1,7 +1,8 @@
 $(document).ready(function (e) {
   $("#form").on("submit", function (e) {
     e.preventDefault();
-    $('.pure-material-progress-circular').fadeIn();
+    const progress = $('.add-house-progress');
+    progress.fadeIn();
     $(':input[type="submit"]').prop('disabled', true);
 
     $.ajax({
@@ -11,7 +12,19 @@ $(document).ready(function (e) {
       contentType: false,
       cache: false,
       processData: false,
-      success: function (data) {
+      success: function (result) {
+        const data = JSON.parse(result);
+        if (!!data.error) {
+          progress.fadeOut();
+          $(".error-add-house__msg").html(`<p>${data.error.msg}</p>`).fadeIn();
+          setTimeout(function () {
+            $(".error-add-house__msg").fadeOut();
+          }, 5000);
+          $(':input[type="submit"]').prop('disabled', false);
+
+          return;
+        }
+
         const message = $('.add-house__msg');
         message.fadeIn().removeClass('alert-danger').addClass('alert-success');
         setTimeout(function () {
@@ -19,14 +32,9 @@ $(document).ready(function (e) {
         }, 5000);
 
         $("#form")[0].reset();
-        $('.pure-material-progress-circular').fadeOut();
+        $('.add-house-progress').fadeOut();
         $(':input[type="submit"]').prop('disabled', false);
-      },
-      error: function (e) {
-        progress.fadeOut();
-        $("#err").html(e).fadeIn();
-        $(':input[type="submit"]').prop('disabled', false);
-      },
+      }
     });
   });
 });

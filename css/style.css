@@ -1746,6 +1746,10 @@ h1, h2, h3, h4, h5,
   overflow: hidden;
 }
 
+.delete-image-progress {
+  font-size: 10px;
+}
+
 .pure-material-progress-circular::-webkit-progress-bar {
   background-color: transparent;
 }
@@ -1919,4 +1923,9 @@ span.buttonText {
 
 .delete-icon {
   font-size: 40px;
+  display: none;
+}
+
+.private__add__image {
+  padding: 24px 0 0 12px;
 }

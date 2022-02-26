@@ -161,6 +161,7 @@
                     <div class="alert alert-success add-house__msg" style="display: none" role="alert">
                       Casa salva com sucesso!
                     </div>
+                    <div class="alert alert-danger error-add-house__msg" style="display: none" role="alert"></div>
                 </div>
             </div>
           </div>
@@ -189,5 +190,6 @@
   <script src="js/contactForm.js"></script>
   <script src="js/addHouseForm.js"></script>
   <script src="js/editHouseForm.js"></script>
+  <script src="js/addImageForm.js"></script>
   </body>
 </html>

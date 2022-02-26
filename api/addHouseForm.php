@@ -2,19 +2,20 @@
 require_once('dbConnection.php');
 
 try {
-    $tmpArray = explode('.', $_FILES['image']['name']);
+    if (false) {
+        $tmpArray = explode('.', $_FILES['image']['name']);
 
-    $ext = $tmpArray[count($tmpArray) - 1];
+        $ext = $tmpArray[count($tmpArray) - 1];
 
-    $imageName = rand(10000, 990000) . '_' . time() . '.' . $ext;
+        $imageName = rand(10000, 990000) . '_' . time() . '.' . $ext;
 
-    $folderName = "../../images/";
+        $folderName = "../../images/";
 
-    $filePath = $folderName . $imageName;
+        $filePath = $folderName . $imageName;
 
-    $sucess = move_uploaded_file($_FILES['image']['tmp_name'], $filePath);
+        $sucess = move_uploaded_file($_FILES['image']['tmp_name'], $filePath);
 
-    if ($sucess) {
+    
         $con = getConnection();
 
         $details = (object) [
@@ -54,6 +55,12 @@ try {
 
     throw new Exception('Ocorreu um erro ao salvar a imagem.');
 } catch (Exception $e) {
-    $con->rollback();
-    throw $e;
+    if (!empty($con)) $con->rollback();
+
+    echo json_encode(array(
+        'error' => array(
+            'msg' => $e->getMessage(),
+            'code' => $e->getCode(),
+        ),
+    ));
 }
