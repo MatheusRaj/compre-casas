@@ -9,8 +9,9 @@ jQuery(document).ready(function($) {
 	"use strict";
 
 	const user = window.localStorage.getItem('user');
+	const path = window.location.pathname;
 
-	if (!!user) {
+	if (!!user && path === '/admin.php') {
 		document.getElementsByClassName('private__add__container')[0].innerHTML = `
 			<input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
 			<progress class="add-house-progress pure-material-progress-circular" style="display: none"></progress>`;
@@ -30,7 +31,7 @@ jQuery(document).ready(function($) {
 			item.innerHTML = `
 				<div class='container'>
 					<div class="row">
-						<form id='add-image-form' method='post' action='api/addImageForm.php' enctype='multipart/form-data'>
+						<form class='add-image-form' method='post' action='api/addImageForm.php' enctype='multipart/form-data'>
 							<label for='add-image'>Selecione a imagem</label>
 							<input id='add-image' name='add-image' type='file' accept='image/*'>
 							<br></br>
@@ -388,8 +389,7 @@ const deleteImage = (e, html_id, image) => {
 		cache: false,
 		processData: false,
 		success: function (result) {
-
-			const data = JSON.parse(result);
+			const data = !!result.length ? result : JSON.parse(result);
 			if (!!data.error) {
 			  $('.delete-icon').fadeIn();
 			  $('.delete-image-progress').fadeOut();

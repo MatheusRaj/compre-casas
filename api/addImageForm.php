@@ -14,7 +14,7 @@ try {
 
     $success = move_uploaded_file($_FILES['add-image']['tmp_name'], $filePath);
 
-    if ($success) {    
+    if ($success) {
         $con = getConnection();
 
 	    $sql = 'SELECT images FROM houses WHERE html_id = :html_id';

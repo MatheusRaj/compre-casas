@@ -1,8 +1,8 @@
 $(document).ready(function (e) {
-    $("#add-image-form").on("submit", function (e) {
+    $(".add-image-form").on("submit", function (e) {
       e.preventDefault();
-      const progress = $('.add-image-progress');
-      progress.fadeIn();
+      console.log('Teste add-image');
+      $('.add-image-progress').fadeIn();
       $(':input[type="submit"]').prop('disabled', true);
   
       $.ajax({
@@ -13,7 +13,8 @@ $(document).ready(function (e) {
         cache: false,
         processData: false,
         success: function (result) {
-          const data = JSON.parse(result);
+          console.log('Teste result: ', result);
+          const data = !!result.length ? result : JSON.parse(result);
           if (!!data.error) {
             progress.fadeOut();
             $(".error-add-image__msg").html(`<p>${data.error.msg}</p>`).fadeIn();
@@ -31,7 +32,7 @@ $(document).ready(function (e) {
             message.fadeOut();
           }, 5000);
   
-          $("#add-image-form")[0].reset();
+          $(".add-image-form")[0].reset();
           $('.add-image-progress').fadeOut();
           $(':input[type="submit"]').prop('disabled', false);
         }
