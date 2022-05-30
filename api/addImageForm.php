@@ -53,12 +53,14 @@ try {
 
     throw new Exception('Ocorreu um erro ao salvar a imagem.');
 } catch (Exception $e) {
-    if (!empty($con)) $con->rollback();
+    if (!!(array)$con) $con->rollback();
 
-    echo json_encode(array(
-        'error' => array(
-            'msg' => $e->getMessage(),
-            'code' => $e->getCode(),
-        ),
-    ));
+    $errorMessage = [
+        "error" => [
+            "msg" => $e->getMessage(),
+            "code" => $e->getCode()
+        ]
+    ];
+
+    echo json_encode((object) $errorMessage);
 }

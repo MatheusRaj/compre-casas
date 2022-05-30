@@ -13,16 +13,23 @@ jQuery(document).ready(function($) {
 
 	if (!!user && path === '/admin.php') {
 		document.getElementsByClassName('private__add__container')[0].innerHTML = `
-			<input name="submit" type="submit" class="btn btn-primary" value="Enviar Mensagem">
+			<input name="submit" type="submit" class="btn btn-primary" value="Adicionar">
 			<progress class="add-house-progress pure-material-progress-circular" style="display: none"></progress>`;
 
 		const editContainer = document.querySelectorAll('.private__edit__container');
 
-		editContainer.forEach(item => {
-			item.innerHTML = `
-				<input name='submit' type='submit' class='btn btn-primary' value='Editar'>
-				<progress class='edit-house-progress pure-material-progress-circular' style='display: none'></progress>`;
-		});
+		const houseIds = document.querySelectorAll('.private__house__id');
+
+		for (let i = 0; i < editContainer.length; i++) {
+			const houseId = houseIds[i].value;
+
+			editContainer[i].innerHTML = `
+			<input name='submit' type='submit' class='btn btn-primary edit__submit' value='Editar'>
+			<progress class='edit-house-progress pure-material-progress-circular' style='display: none'></progress>
+			<span>&nbsp;</span>
+			<button class='btn btn-danger' type='button' onclick='deleteHouse(event, "${houseId}")'>Deletar</button>
+			<progress class='delete-house-progress pure-material-progress-circular' style='display: none'></progress>`;
+		}
 
 		const addImage = document.querySelectorAll('.private__add__image');
 
@@ -230,8 +237,6 @@ jQuery(document).ready(function($) {
 
 	  });
 
-	  
-	  
 	  $('.custom-prev1').click(function(e) {
 	  	e.preventDefault();
 	  	$('.nonloop-block-13').trigger('prev.owl.carousel');
@@ -300,7 +305,6 @@ jQuery(document).ready(function($) {
 
   var siteScroll = function() {
 
-  	
 
   	$(window).scroll(function() {
 
@@ -340,18 +344,43 @@ const onSuccess = (googleUser) => {
 
 	const editContainer = document.querySelectorAll('.private__edit__container');
 
-	editContainer.forEach(item => {
-		item.innerHTML = `
-			<input name='submit' type='submit' class='btn btn-primary' value='Editar'>
-			<progress class='edit-house-progress pure-material-progress-circular' style='display: none'></progress>`;
-	});
+	const houseIds = document.querySelectorAll('.private__house__id');
+
+	for (let i = 0; i < editContainer.length; i++) {
+		const houseId = houseIds[i].value;
+
+		editContainer[i].innerHTML = `
+		<input name='submit' type='submit' class='btn btn-primary edit__submit' value='Editar'>
+		<progress class='edit-house-progress pure-material-progress-circular' style='display: none'></progress>
+		<span>&nbsp;</span>
+		<button class='btn btn-danger' type='button' onclick='deleteHouse(event, "${houseId}")'>Deletar</button>
+		<progress class='delete-house-progress pure-material-progress-circular' style='display: none'></progress>`;
+	}
 
 	const addImage = document.querySelectorAll('.private__add__image');
 
 	addImage.forEach(item => {
+		const houseId = item.children[0].value;
 		item.innerHTML = `
-		<input name='submit' type='submit' class='btn btn-primary' value='Adicionar imagem'>
-		<progress class='add-image-progress pure-material-progress-circular' style='display: none'></progress>`;
+			<div class='container'>
+				<div class="row">
+					<form class='add-image-form' method='post' action='api/addImageForm.php' enctype='multipart/form-data'>
+						<label for='add-image'>Selecione a imagem</label>
+						<input id='add-image' name='add-image' type='file' accept='image/*'>
+						<br></br>
+						<input name='html_id' type='text' value='${houseId}' style='visibility:hidden'>
+						<input name='submit' type='submit' class='btn btn-primary' value='Adicionar imagem'>
+						<progress class='add-image-progress pure-material-progress-circular' style='display: none'></progress>
+					</form>
+					<div class="col-12">
+						<br></br>
+						<div class="alert alert-success add-image__msg" style="display: none" role="alert">
+							Imagem salva com sucesso!
+						</div>
+						<div class="alert alert-danger error-add-image__msg" style="display: none" role="alert"></div>
+					</div>
+				</div>
+			<div class='container'>`;
 	});
 
 	const icons = document.querySelectorAll('.delete-icon');
@@ -389,7 +418,10 @@ const deleteImage = (e, html_id, image) => {
 		cache: false,
 		processData: false,
 		success: function (result) {
-			const data = !!result.length ? result : JSON.parse(result);
+			const error = result.includes('"error":');
+			
+			const data = error && JSON.parse(result.split('\n')[1]);
+
 			if (!!data.error) {
 			  $('.delete-icon').fadeIn();
 			  $('.delete-image-progress').fadeOut();
@@ -412,8 +444,57 @@ const deleteImage = (e, html_id, image) => {
 			$('.delete-icon').fadeIn();
 		}
 	});
-	  
-	return;
+}
+
+const deleteHouse = (e, html_id) => {
+
+	e.preventDefault();
+
+    $('.delete-house-progress').fadeIn();
+    $('.edit__submit').prop('disabled', true);
+
+	const item = { html_id };
+
+	const formData = new FormData();
+
+	for ( var key in item ) {
+	    formData.append(key, item[key]);
+	}
+
+	$.ajax({
+		url: "api/deleteHouseForm.php",
+		type: "POST",
+		data: formData,
+		contentType: false,
+		cache: false,
+		processData: false,
+		success: function (result) {
+			const error = result.includes('"error":');
+			
+			const data = error && JSON.parse(result.split('\n')[1]);
+
+			if (!!data.error) {
+			  $('.delete-icon').fadeIn();
+			  $('.delete-house-progress').fadeOut();
+			  $(".error-delete-house__msg").html(`<p>${data.error.msg}</p>`).fadeIn();
+			  $('.edit__submit').prop('disabled', false);
+
+			  setTimeout(function () {
+				$(".error-delete-house__msg").fadeOut();
+			  }, 5000);
+			}
+
+			const message = $('.delete-house__msg');
+			message.fadeIn().removeClass('alert-danger').addClass('alert-success');
+			$('.edit__submit').prop('disabled', false);
+			setTimeout(function () {
+			message.fadeOut();
+			refreshPage();
+			}, 5000);
+
+			$('.delete-house-progress').fadeOut();
+		}
+	});
 }
 
 const startApp = () => {

@@ -52,14 +52,16 @@ try {
         return print_r($data);
     }
 
-    throw new Exception('Ocorreu um erro ao salvar a imagem.');
+    throw new Exception('Ocorreu um erro ao salvar a propriedade.');
 } catch (Exception $e) {
-    if (!empty($con)) $con->rollback();
+    if (!!(array)$con) $con->rollback();
 
-    echo json_encode(array(
-        'error' => array(
-            'msg' => $e->getMessage(),
-            'code' => $e->getCode(),
-        ),
-    ));
+    $errorMessage = [
+        "error" => [
+            "msg" => $e->getMessage(),
+            "code" => $e->getCode()
+        ]
+    ];
+
+    echo json_encode((object) $errorMessage);
 }

@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    console.log('VAI TOMA NO CU FILHA DA PUTA: ', $(".edit-house__form"));
     $(".edit-house__form").on("submit", function (e) {
       e.preventDefault();
       const progress = $('.edit-house-progress');
@@ -14,7 +13,10 @@ $(document).ready(function () {
         cache: false,
         processData: false,
         success: function (result) {
-          const data = !!result.length ? result : JSON.parse(result);
+          const error = result.includes('"error":');
+          
+          const data = error && JSON.parse(result.split('\n')[1]);
+
           if (!!data.error) {
             progress.fadeOut();
             $(".error-edit-house__msg").html(`<p>${data.error.msg}</p>`).fadeIn();

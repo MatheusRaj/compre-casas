@@ -13,8 +13,10 @@ $(document).ready(function (e) {
       cache: false,
       processData: false,
       success: function (result) {
-        console.log(result);
-        const data = !!result.length ? result : JSON.parse(result);
+        const error = result.includes('"error":');
+        
+        const data = error && JSON.parse(result.split('\n')[1]);
+
         if (!!data.error) {
           progress.fadeOut();
           $(".error-add-house__msg").html(`<p>${data.error.msg}</p>`).fadeIn();

@@ -111,6 +111,7 @@ foreach ($modalList as $house) {
                                             <input name='html_id' type='text' value='{$house->id}' style='display:none'>
                                         </div>
                                         <div class='col-12 display__flex private__edit__container'>
+                                            <input class='private__house__id' style='display: none' value='{$house->id}'>
 	            	                            <button class='btn btn-primary edit__button' disabled>Para editar faça o login na parte inferior da página</button>
                                         </div>
                                     </div>
@@ -121,6 +122,10 @@ foreach ($modalList as $house) {
                                           Casa salva com sucesso!
                                         </div>
                                         <div class='alert alert-danger error-edit-house__msg' style='display: none' role='alert'></div>
+                                        <div class='alert alert-success delete-house__msg' style='display: none' role='alert'>
+                                          Casa excluída com sucesso!
+                                        </div>
+                                        <div class='alert alert-danger error-delete-house__msg' style='display: none' role='alert'></div>
                                     </div>
                                 </div>
                               </div>

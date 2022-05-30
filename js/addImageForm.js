@@ -1,7 +1,6 @@
 $(document).ready(function (e) {
     $(".add-image-form").on("submit", function (e) {
       e.preventDefault();
-      console.log('Teste add-image');
       $('.add-image-progress').fadeIn();
       $(':input[type="submit"]').prop('disabled', true);
   
@@ -13,8 +12,10 @@ $(document).ready(function (e) {
         cache: false,
         processData: false,
         success: function (result) {
-          console.log('Teste result: ', result);
-          const data = !!result.length ? result : JSON.parse(result);
+          const error = result.includes('"error":');
+          
+          const data = error && JSON.parse(result.split('\n')[1]);
+
           if (!!data.error) {
             progress.fadeOut();
             $(".error-add-image__msg").html(`<p>${data.error.msg}</p>`).fadeIn();
